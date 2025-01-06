@@ -66,7 +66,7 @@ export default function TransferTable() {
 													variant="subtitle1"
 													fontWeight={600}
 												>
-													{header}
+													{header.replace(/_/g, ' ')}
 												</Typography>
 											</TableCell>
 										))}

@@ -45,7 +45,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 				Cookies.set('user-permissions', JSON.stringify(data.permissions), { secure: false, sameSite: 'strict' })
 
 				setUser({ username, role: data.role, permissions: data.permissions })
-				router.push('/transfers')
+				router.replace('/transfers')
 
 				// Devolver una respuesta de éxito
 				return { success: true, message: 'Inicio de sesión exitoso' }

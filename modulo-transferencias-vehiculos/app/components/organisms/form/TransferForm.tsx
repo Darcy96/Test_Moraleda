@@ -59,11 +59,13 @@ export default function TransferForm({ transferId, create, edit, router, formDat
 
 		try {
 			transferId ? await edit.mutateAsync({ id: transferId as number, data: formData }) : await create.mutateAsync(formData)
-			router.push('/transfers')
+			router.replace('/transfers')
 		} catch (error) {
 			console.error('Error creating transfer:', error)
 		}
 	}
+	const enableFields = hasPermission('edit')
+	
 
 	return (
 		<Box
@@ -75,12 +77,14 @@ export default function TransferForm({ transferId, create, edit, router, formDat
 			<TextField
 				label="Plate"
 				name="plate"
+				disabled={!enableFields}
 				value={formData.plate}
 				onChange={handleChange}
 				error={errors.plate}
 				helperText={errors.plate && 'This field is required'}
 			/>
 			<TextField
+				disabled={!enableFields}
 				select
 				label="Transfer Type"
 				name="type"
@@ -99,6 +103,7 @@ export default function TransferForm({ transferId, create, edit, router, formDat
 				))}
 			</TextField>
 			<TextField
+				disabled={!enableFields}
 				select
 				label="Client"
 				name="client"
@@ -123,6 +128,7 @@ export default function TransferForm({ transferId, create, edit, router, formDat
 				)}
 			</TextField>
 			<TextField
+				disabled={!enableFields}
 				select
 				label="Transmitter"
 				name="transmitter"
@@ -147,6 +153,7 @@ export default function TransferForm({ transferId, create, edit, router, formDat
 				)}
 			</TextField>
 			<TextField
+				disabled={!enableFields}
 				label="Service"
 				name="service"
 				type="number"
@@ -156,15 +163,15 @@ export default function TransferForm({ transferId, create, edit, router, formDat
 				helperText={errors.service && 'This field must be a valid number'}
 			/>
 
-			{hasPermission('edit') && (
-				<Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2 }}>
-					<Button
-						variant="outlined"
-						color="info"
-						onClick={() => router.push('/transfers')}
-					>
-						Cancel
-					</Button>
+			<Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2 }}>
+				<Button
+					variant="outlined"
+					color="info"
+					onClick={() => router.replace('/transfers')}
+				>
+					{hasPermission('edit')?'Cancel':'Go back'}
+				</Button>
+				{hasPermission('edit') && (
 					<Button
 						variant="contained"
 						color="primary"
@@ -173,8 +180,8 @@ export default function TransferForm({ transferId, create, edit, router, formDat
 					>
 						{create.status == 'pending' || edit.status == 'pending' ? 'Saving...' : 'Save'}
 					</Button>
-				</Box>
-			)}
+				)}
+			</Box>
 		</Box>
 	)
 }
