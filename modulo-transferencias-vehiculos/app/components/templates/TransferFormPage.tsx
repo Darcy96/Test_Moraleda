@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Box, Button, Typography, Tooltip, Paper } from '@mui/material'
+import { Box, Button, Typography, Tooltip, Paper, useMediaQuery, useTheme } from '@mui/material'
 import { useAddTransferencia, useClients, useDeleteTransferencia, useTransferenciaById, useUpdateTransferencia } from '@api/transfers/hooks'
 
 import { Transferencia } from 'app/types'
@@ -17,8 +17,10 @@ interface Props {
 }
 
 export default function TransferFormPage({ transferId }: Props) {
+	const theme = useTheme()
 	const { data: transferData, isLoading } = useTransferenciaById(transferId || false)
 	const { data: clients } = useClients()
+	const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
 	const { hasPermission } = usePermissions()
 	const router = useRouter()
@@ -67,7 +69,7 @@ export default function TransferFormPage({ transferId }: Props) {
 				boxShadow: 'inherit',
 				color: 'rgb(230, 235, 241)',
 				border: '1px solid',
-				maxWidth: '50vw',
+				width: isSmallScreen ? '100%' : '60vw',
 				margin: 'auto',
 				padding: '20px',
 				flexDirection: 'column',
@@ -117,6 +119,7 @@ export default function TransferFormPage({ transferId }: Props) {
 				create={create}
 				router={router}
 				edit={edit}
+				transferId={transferId}
 			/>
 			<MyDialog
 				open={open}

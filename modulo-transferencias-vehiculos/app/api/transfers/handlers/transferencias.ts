@@ -39,6 +39,7 @@ export const updateTransferencia = async (
     id: number,
     updatedData: Partial<Transferencia>
 ): Promise<Transferencia> => {
+    
     const index = transferenciasMock.findIndex((item) => item.id === id);
     if (index > -1) {
         transferenciasMock[index] = { ...transferenciasMock[index], ...updatedData };

@@ -58,7 +58,7 @@ export default function TransferForm({ transferId, create, edit, router, formDat
 		if (!validateForm()) return
 
 		try {
-			transferId ? await create.mutateAsync(formData) : await edit.mutateAsync({ id: transferId as number, data: formData })
+			transferId ? await edit.mutateAsync({ id: transferId as number, data: formData }) : await create.mutateAsync(formData)
 			router.push('/transfers')
 		} catch (error) {
 			console.error('Error creating transfer:', error)
@@ -149,7 +149,7 @@ export default function TransferForm({ transferId, create, edit, router, formDat
 			<TextField
 				label="Service"
 				name="service"
-                type='number'
+				type="number"
 				value={formData.service}
 				onChange={handleChange}
 				error={errors.service}
