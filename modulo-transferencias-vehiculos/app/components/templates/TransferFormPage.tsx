@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Box, Button, Typography, Tooltip, Paper, useMediaQuery, useTheme } from '@mui/material'
-import { useAddTransferencia, useClients, useDeleteTransferencia, useTransferenciaById, useUpdateTransferencia } from '@api/transfers/hooks'
+import { useAddTransfers, useClients, useDeleteTransfer, useTransferById, useUpdateTransfer } from '@api/transfers/hooks'
 
 import { Transferencia } from 'app/types'
 import { DeleteForever } from '@mui/icons-material'
@@ -18,15 +18,15 @@ interface Props {
 
 export default function TransferFormPage({ transferId }: Props) {
 	const theme = useTheme()
-	const { data: transferData, isLoading } = useTransferenciaById(transferId || false)
+	const { data: transferData, isLoading } = useTransferById(transferId || false)
 	const { data: clients } = useClients()
 	const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
 	const { hasPermission } = usePermissions()
 	const router = useRouter()
-	const create = useAddTransferencia()
-	const edit = useUpdateTransferencia()
-	const deleteAction = useDeleteTransferencia()
+	const create = useAddTransfers()
+	const edit = useUpdateTransfer()
+	const deleteAction = useDeleteTransfer()
 	const [open, setOpen] = useState(false)
 
 	const [formData, setFormData] = useState<Omit<Transferencia, 'id'>>({

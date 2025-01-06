@@ -3,6 +3,6 @@
 import { TransferListPage } from '@components/templates'
 
 
-export default function Transferencias() {
+export default function Transfers() {
 	return <TransferListPage/>
 }

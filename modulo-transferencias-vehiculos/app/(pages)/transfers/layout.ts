@@ -3,8 +3,8 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-	title: 'Transferencias',
-	description: 'Página de transferencias'
+	title: 'Transfers',
+	description: 'Transfers page'
 }
 
 export default function Layout({

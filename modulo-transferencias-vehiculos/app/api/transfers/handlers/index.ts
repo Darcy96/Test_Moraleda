@@ -1,2 +1,2 @@
-export * from './transferencias'
+export * from './transfers'
 export * from './users'

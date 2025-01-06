@@ -15,7 +15,7 @@ export default function TransferListPage() {
 
 	return (
 		<Box>
-			{/* Encabezado */}
+		
 			<Box
 				sx={{
 					display: 'flex',
@@ -41,7 +41,7 @@ export default function TransferListPage() {
 				)}
 			</Box>
 
-			{/* Tabla de Transferencias */}
+			
 			<TransferTable />
 		</Box>
 	)

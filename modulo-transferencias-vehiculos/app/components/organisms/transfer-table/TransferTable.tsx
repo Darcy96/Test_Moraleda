@@ -1,7 +1,7 @@
 'use client'
 import React, { useEffect, useMemo, useState } from 'react'
 import { Box,  Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
-import { useTransferencias } from '@api/transfers/hooks'
+import { useTransfers } from '@api/transfers/hooks'
 import { Transferencia } from 'app/types'
 import Filter from './Filter'
 import { useRouter } from 'next/navigation'
@@ -9,17 +9,17 @@ import MySpinner from '@components/molecules/MySpinner'
 
 export default function TransferTable() {
 	const router = useRouter()
-	const { data: transferencias, isLoading, isError, error } = useTransferencias()
+	const { data: transfers, isLoading, isError, error } = useTransfers()
 	const [spinnerMessage, setSpinnerMessage] = useState<string>('Loading transfers')
 	const [headers, setHeaders] = useState<false | (keyof Transferencia)[]>()
 
 	const [filters, setFilters] = useState({ plate: '', type: '' })
 
-	const filteredTransferencias = useMemo(() => {
-		if (!transferencias) return []
+	const filteredTransfers = useMemo(() => {
+		if (!transfers) return []
 		const plateFilter = filters.plate.toLowerCase()
-		return transferencias.filter((t) => t.plate.toLowerCase().includes(plateFilter) && (filters.type === '' || t.type === filters.type))
-	}, [transferencias, filters])
+		return transfers.filter((t) => t.plate.toLowerCase().includes(plateFilter) && (filters.type === '' || t.type === filters.type))
+	}, [transfers, filters])
 
 	useEffect(() => {
 		if (isLoading) {
@@ -28,15 +28,15 @@ export default function TransferTable() {
 		if (isError) {
 			setSpinnerMessage(`Error: ${error.message}`)
 		}
-		if (filteredTransferencias.length === 0 || transferencias?.length === 0) {
+		if (filteredTransfers.length === 0 || transfers?.length === 0) {
 			setSpinnerMessage('No transfers available')
 		} else {
 			if (headers === undefined) {
-				setHeaders(() => Object.keys(filteredTransferencias[0]) as (keyof Transferencia)[])
+				setHeaders(() => Object.keys(filteredTransfers[0]) as (keyof Transferencia)[])
 			}
 		}
 		setSpinnerMessage('')
-	}, [isLoading, isError, filteredTransferencias, headers])
+	}, [isLoading, isError, filteredTransfers, headers])
 
 	const handleClick = (event: React.MouseEvent<unknown>, id: number) => {
 		router.push(`/transfers/edit/${id}`)
@@ -48,7 +48,7 @@ export default function TransferTable() {
 			<Filter
 				filters={filters}
 				setFilters={setFilters}
-				transferencias={transferencias}
+				transfers={transfers}
 			/>
 			{spinnerMessage !== '' ? (
 				<MySpinner message={spinnerMessage} />
@@ -73,7 +73,7 @@ export default function TransferTable() {
 									</TableRow>
 								</TableHead>
 								<TableBody>
-									{filteredTransferencias.map((transferencia) => (
+									{filteredTransfers.map((transferencia) => (
 										<TableRow
 											sx={{ cursor: 'pointer' }}
 											hover

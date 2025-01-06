@@ -6,7 +6,7 @@ import { Transferencia } from 'app/types'
 import { transferTypes } from 'app/constants/general'
 
 interface Props {
-	transferencias: Transferencia[] | undefined
+	transfers: Transferencia[] | undefined
 	filters: {
 		plate: string
 		type: string
