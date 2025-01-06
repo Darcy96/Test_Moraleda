@@ -49,15 +49,12 @@ The application includes mock users for testing different roles and permissions.
 
 ## **🚀 Installation Guide**
 
-
-
-
 ### **1. Clone the Repository**
 ```bash
 git clone https://github.com/Darcy96/Test_Moraleda.git
 cd Test_Moraleda
 ```
-### **2. Clone the Repository**
+### **2. Install yarn**
 This project uses Yarn for package management. If you don't have Yarn installed, you can install it globally:
 ```bash
 npm install -g yarn
