@@ -13,8 +13,9 @@ const eslintConfig = [
 	...compat.extends('next/core-web-vitals', 'next/typescript'),
 	{
 		rules: {
-			'@typescript-eslint/no-unused-expressions': 'warn', // Cambiar a warning
-			'react/jsx-no-comment-textnodes': 'warn' // Cambiar a warning
+			'@typescript-eslint/no-unused-expressions': 'warn',
+			'react/jsx-no-comment-textnodes': 'warn',
+			'react-hooks/exhaustive-deps':'warn'
 		}
 	}
 ]

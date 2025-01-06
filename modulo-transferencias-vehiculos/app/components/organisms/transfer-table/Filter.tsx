@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Box, FormControl, InputLabel, MenuItem, Paper, Select, SelectChangeEvent, TextField, Typography } from '@mui/material'
+import { FormControl, InputLabel, MenuItem, Paper, Select, SelectChangeEvent, TextField, Typography } from '@mui/material'
 
 import { Transferencia } from 'app/types'
 import { transferTypes } from 'app/constants/general'
@@ -66,7 +66,7 @@ export default function Filter({ filters, setFilters }: Props) {
 				<Select
 					labelId="type-label"
 					name="type"
-					label='Type'
+					label="Type"
 					value={filters.type}
 					onChange={handleSelectChange}
 				>

@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useMemo, useState } from 'react'
-import { Box, CircularProgress, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
+import { Box,  Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
 import { useTransferencias } from '@api/transfers/hooks'
 import { Transferencia } from 'app/types'
 import Filter from './Filter'
@@ -32,7 +32,7 @@ export default function TransferTable() {
 			setSpinnerMessage('No transfers available')
 		} else {
 			if (headers === undefined) {
-				setHeaders((prev) => Object.keys(filteredTransferencias[0]) as (keyof Transferencia)[])
+				setHeaders(() => Object.keys(filteredTransferencias[0]) as (keyof Transferencia)[])
 			}
 		}
 		setSpinnerMessage('')
