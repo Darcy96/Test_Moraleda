@@ -1,7 +1,7 @@
 'use client'
 import { useAuth } from '@context/AuthContext'
 import { Logout } from '@mui/icons-material'
-import { Box, ButtonBase, Avatar, Popper, Fade, Paper, Button } from '@mui/material'
+import { Box, ButtonBase, Avatar, Popper, Fade, Paper, Typography, IconButton } from '@mui/material'
 import { deepOrange } from '@mui/material/colors'
 import { stringAvatar } from '@utils/globalFuntions'
 import React, { useState } from 'react'
@@ -62,15 +62,29 @@ export default function ButtonMenu() {
 							{...TransitionProps}
 							timeout={350}
 						>
-							<Paper sx={{ height: '-webkit-fill-available', display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end', padding: 2 }}>
-								<Button
-									color="info"
-									variant="contained"
-									startIcon={<Logout />}
-									onClick={handleLogout}
+							<Paper sx={{ height: '-webkit-fill-available', display: 'flex', justifyContent: 'space-between', padding: 2 }}>
+								<Box
+									display={'flex'}
+									flexDirection={'row'}
+									alignItems={'center'}
+									gap={'5px'}
 								>
-									Logout
-								</Button>
+									<Avatar sx={{ width: 30, height: 30, bgcolor: deepOrange[500] }}>{stringAvatar(user?.username || 'A')}</Avatar>
+									<Typography
+										textTransform={'capitalize'}
+										variant="subtitle1"
+									>
+										{user?.username}
+									</Typography>
+								</Box>
+
+								<IconButton
+									color="info"
+									onClick={handleLogout}
+									size="small"
+								>
+									<Logout />
+								</IconButton>
 							</Paper>
 						</Fade>
 					)}
