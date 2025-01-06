@@ -21,6 +21,16 @@ The application is deployed on both **Vercel** and **Render** for testing purpos
 - 🌐 **Render**: [https://test-moraleda.onrender.com/](https://test-moraleda.onrender.com/)
 
 ---
+
+
+## **📌 Technical Highlights**
+
+- **Built with App Router**: This project utilizes the **App Router** introduced in Next.js 13+ for routing, layouts, and server components.
+- **TypeScript**: Ensures type safety across the application for better maintainability.
+- **Material UI**: Provides modern and customizable React components.
+- **React Query**: Simplifies data fetching and state management.
+
+---
 ## **🔑 User Roles for Testing**
 
 The application includes mock users for testing different roles and permissions. Use the following credentials to test authentication and access control:
