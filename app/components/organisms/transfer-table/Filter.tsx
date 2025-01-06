@@ -2,8 +2,8 @@ import React from 'react'
 
 import { FormControl, InputLabel, MenuItem, Paper, Select, SelectChangeEvent, TextField, Typography } from '@mui/material'
 
+import { transferTypes } from '@constants/general'
 import { Transferencia } from 'app/types'
-import { transferTypes } from 'app/constants/general'
 
 interface Props {
 	transfers: Transferencia[] | undefined

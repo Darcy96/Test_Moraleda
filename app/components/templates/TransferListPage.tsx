@@ -1,21 +1,21 @@
 'use client'
-import React from 'react'
-import { Typography, Box, Button } from '@mui/material'
+import { Box, Button, Typography } from '@mui/material'
 
-import { useRouter } from 'next/navigation'
 import { TransferTable } from '@components/organisms'
 import { usePermissions } from 'app/hooks/usePermissions'
+import { useRouter } from 'next/navigation'
 
 export default function TransferListPage() {
-	const { hasPermission } = usePermissions()
-	const router = useRouter()
+	const { hasPermission } = usePermissions() // 🔐 Accessing the user's permissions
+	const router = useRouter() // 🧭 Accessing the Next.js router for navigation
+
+	// 🚀 Handling the creation of a new transfer
 	const handleAddTransferencia = () => {
-		router.push('/transfers/create')
+		router.push('/transfers/create') // 🧭 Navigating to the transfer creation page
 	}
 
 	return (
 		<Box>
-		
 			<Box
 				sx={{
 					display: 'flex',
@@ -41,7 +41,6 @@ export default function TransferListPage() {
 				)}
 			</Box>
 
-			
 			<TransferTable />
 		</Box>
 	)

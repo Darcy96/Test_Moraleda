@@ -1,10 +1,11 @@
 'use client'
 
-import React, { useState } from 'react'
 import { Box, Button, MenuItem, TextField } from '@mui/material'
+import React, { useState } from 'react'
 
 import { Transferencia, Users } from 'app/types'
-import { transferTypes } from 'app/constants/general'
+
+import { transferTypes } from '@constants/general'
 import { UseMutationResult } from '@tanstack/react-query'
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
 
@@ -28,20 +29,25 @@ interface Props {
 }
 export default function TransferForm({ transferId, create, edit, router, formData, setFormData, clients, hasPermission }: Props) {
 	const [errors, setErrors] = useState<{ [K in keyof Transferencia]?: boolean }>({
+		// ❌ State to track form errors
 		plate: false,
 		type: false,
 		client: false,
 		transmitter: false,
 		service: false
 	})
+
+	// 🔄 Handles changes in form inputs
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target
 		setFormData((prev) => ({ ...prev, [name]: name === 'service' ? Number(value) : value }))
 	}
 
+	// ✅ Validates individual form fields
 	const validateField = (value: string | number | undefined) =>
 		value === undefined || (typeof value === 'string' && value.trim() === '') || (typeof value === 'number' && value <= 0)
 
+	// ✅ Validates the entire form
 	const validateForm = () => {
 		const newErrors = {
 			plate: validateField(formData.plate),
@@ -54,18 +60,20 @@ export default function TransferForm({ transferId, create, edit, router, formDat
 		return !Object.values(newErrors).some(Boolean)
 	}
 
+	// 🚀 Handles form submission
 	const handleSubmit = async () => {
-		if (!validateForm()) return
+		if (!validateForm()) return // 🚫 If form is invalid, prevent submission
 
 		try {
+			// 📝 Submit data for creation or update based on transferId
 			transferId ? await edit.mutateAsync({ id: transferId as number, data: formData }) : await create.mutateAsync(formData)
-			router.replace('/transfers')
+			router.replace('/transfers') // 🧭 Redirect to transfers page after successful submission
 		} catch (error) {
-			console.error('Error creating transfer:', error)
+			console.error('Error creating transfer:', error) // ❌ Log any errors during submission
 		}
 	}
-	const enableFields = hasPermission('edit')
-	
+
+	const enableFields = hasPermission('edit') // 🔐 Check if the user has edit permission
 
 	return (
 		<Box
@@ -169,7 +177,7 @@ export default function TransferForm({ transferId, create, edit, router, formDat
 					color="info"
 					onClick={() => router.replace('/transfers')}
 				>
-					{hasPermission('edit')?'Cancel':'Go back'}
+					{hasPermission('edit') ? 'Cancel' : 'Go back'}
 				</Button>
 				{hasPermission('edit') && (
 					<Button

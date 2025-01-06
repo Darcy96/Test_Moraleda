@@ -1,15 +1,15 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { Box, Button, Typography, Tooltip, Paper, useMediaQuery, useTheme } from '@mui/material'
 import { useAddTransfers, useClients, useDeleteTransfer, useTransferById, useUpdateTransfer } from '@api/transfers/hooks'
+import { Box, Button, Paper, Tooltip, Typography, useMediaQuery, useTheme } from '@mui/material'
+import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 
-import { Transferencia } from 'app/types'
 import { DeleteForever } from '@mui/icons-material'
+import { Transferencia } from 'app/types'
 
-import { TransferForm } from '@components/organisms'
 import { MyDialog, MySpinner } from '@components/molecules'
+import { TransferForm } from '@components/organisms'
 import { usePermissions } from '@hooks/usePermissions'
 
 interface Props {
@@ -17,19 +17,24 @@ interface Props {
 }
 
 export default function TransferFormPage({ transferId }: Props) {
-	const theme = useTheme()
-	const { data: transferData, isLoading } = useTransferById(transferId || false)
-	const { data: clients } = useClients()
-	const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
+	const theme = useTheme() // 🎨 Accessing Material UI theme for responsiveness
+	const { data: transferData, isLoading } = useTransferById(transferId || false) // 🎣 Fetching transfer data by ID (if available)
+	const { data: clients } = useClients() // 🎣 Fetching client data
+	const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm')) // 📱 Checking if the screen is small
 
+	// 🎣 Accessing permissions and router instance
 	const { hasPermission } = usePermissions()
 	const router = useRouter()
+
+	// 🎣 React Query mutations for API interactions
 	const create = useAddTransfers()
 	const edit = useUpdateTransfer()
 	const deleteAction = useDeleteTransfer()
-	const [open, setOpen] = useState(false)
 
+	// 🗃️ State variables for managing UI and data
+	const [open, setOpen] = useState(false) // 🗃️ State for dialog visibility
 	const [formData, setFormData] = useState<Omit<Transferencia, 'id'>>({
+		// ℹ️ Form data (excluding 'id')
 		type: 'Venta',
 		service: 0,
 		client: '',
@@ -37,6 +42,7 @@ export default function TransferFormPage({ transferId }: Props) {
 		plate: ''
 	})
 
+	// 🔄 Updating form data when transfer data is available
 	useEffect(() => {
 		if (transferId && transferData) {
 			setFormData({
@@ -49,6 +55,7 @@ export default function TransferFormPage({ transferId }: Props) {
 		}
 	}, [transferData, transferId])
 
+	// 🖱️ Handling dialog open and delete actions
 	const handleClickOpen = () => {
 		setOpen(true)
 	}
@@ -59,6 +66,7 @@ export default function TransferFormPage({ transferId }: Props) {
 		router.push('/transfers')
 	}
 
+	// ⏳ Showing loading spinner while fetching transfer data
 	if (isLoading) {
 		return <MySpinner message={'Loading form'} />
 	}
